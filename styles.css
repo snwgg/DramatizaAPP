@@ -295,9 +295,9 @@ html, body {
   .app-shell { max-width: 480px; }
 }
 
-/* Logo sempre amarela #F5C518 */
+/* Logo forçada para o amarelo #F5C518 independente da cor original */
 .splash-logo img,
 .auth-logo img,
 .hero-logo img {
-  filter: invert(85%) sepia(50%) saturate(700%) hue-rotate(5deg) brightness(100%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(79%) sepia(57%) saturate(692%) hue-rotate(349deg) brightness(100%) contrast(95%);
 }
