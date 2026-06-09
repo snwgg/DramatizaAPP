@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dramatiz</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.splash {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 2rem 2rem 3.5rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+}
+.splash-bg {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  opacity: 0.18;
+  z-index: 0;
+}
+.splash-bg div { background: #1a1a1a; overflow: hidden; border-radius: 10px; }
+.splash-bg div img { width: 100%; height: 100%; object-fit: cover; }
+.splash-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 50%, var(--black) 80%);
+  z-index: 1;
+}
+.splash-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  text-align: center;
+}
+.splash-logo { margin-bottom: 1.5rem; }
+.splash-logo img { width: 80px; height: 80px; }
+.splash-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 4px;
+  color: var(--yellow);
+  margin-bottom: 0.5rem;
+}
+.splash-tagline {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+.splash-sub {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: 2.5rem;
+}
+.splash-btns { display: flex; flex-direction: column; gap: 0.75rem; }
+.splash-privacy {
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--yellow);
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="splash">
+    <div class="splash-bg" id="splashBg"></div>
+    <div class="splash-overlay"></div>
+    <div class="splash-content">
+      <div class="splash-logo fade-up fade-up-1">
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FtYWRhXzIiIGZpbGw9IiNGNUM1MTgiIGRhdGEtbmFtZT0iQ2FtYWRhIDIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUyMC44MyA1MTkuMzgiPgogIDxnIGlkPSJDYW1hZGFfMS0yIiBkYXRhLW5hbWU9IkNhbWFkYSAxIj4KICAgIDxwYXRoIGQ9Ik0xMi45MywzNTEuNTZjLTEwLjA4LTI4Ljc2LTE1LjAyLTU4LTEyLjA5LTg3LjYzbDEuMjMtMTIuNDJjNS4zNSwxMTIuNjMsNjYuNTYsMjA4LjkyLDE3Ny40MiwyNDIuOTEsMTAuNzUtLjU2LDE4LjQ5LTYuODgsMjQuMDYtMTUuODQsOC4xMS0xNC41LDEwLjk2LTMxLjAxLDEwLjk5LTQ3Ljk5LTE2LjI0LDkuNDktMzQuMjksMTEuODctNTIuMDEsNi4wNy01MC4yNS0xNi40OC04Ni4wMi02Ny4wOS0xMDUuMy0xMTQuOTlDMjYuNzQsMjQ1Ljg5LDEzLjIzLDE3NS43MSw4LjIzLDkzLjE0YzI3LjM1LDI0LjkyLDY2LjE1LDM2LjY0LDEwMi4xNCwzOS41Nyw0NC4yNCwzLjYxLDg4LjE5LTIuMDIsMTMwLjI1LTE1Ljg5LDI0LjYyLTguMTIsNDguNTktMjAuNzgsNjYuMjctNDAuODEuMjEsMzQuNzgtMi4wMSw2Ny43NC02LjAzLDEwMC43bC4yLTEzLjE1Ljc3LTE0LjgzLjQxLTEzLjEuNjYtNDQuOTJjLTguNTEsNy4yNS0xNi43MywxMi4yOS0yNi4zOSwxNy4xMy0xNy4wMSw4LjUzLTMzLjU2LDE2LjgxLTQ5LjExLDI3LjY4LTE0LjUzLDEwLjE2LTI1LjI1LDIzLjE2LTMxLjA1LDM5LjkyLTE0LjgxLDQyLjgtOC4yMSw4My4xOSwzLjY1LDEyNS44OWwxNC41Niw1Mi40M2M1LjQsMTkuNDQsOC40NiwzOC42Myw5LjQ3LDU4Ljg5LDEuNTgsMzEuODUtNS4wNyw3My4xNS0zMS44OSw5MS43Ni0zLjA1LDIuMTItOC44OCw1LjE3LTEyLjQ2LDQuMzUtMTAuNTQtMi40Mi0xOS40LTYuMDEtMjkuMDUtMTAuMjEtNjQuMTktMjcuOTMtMTE0LjMzLTgwLjI3LTEzNy43MS0xNDdaTTE0My40OCwyNDcuNjhjLTQuNjMtMjAuNi0yMi40LTM0LjI1LTQyLjMyLTM1LjI5LTIxLjQzLTEuMTItNDAuODgsMTQuMjctNDIuODMsMzYuMjEsMzEuMzgtMTMuMTgsNTMuNTUtMTMuNTQsODUuMTQtLjkyWk0yMTAuNTIsMzgzLjhsLTguNzItNDIuNTVjLTI3LjgxLDkuMTUtNTYuMjksNi40NS04Mi4wMi01Ljc2bC0yNC44MS0xNC45OGMuNzcsNS41NCwzLjg4LDEwLjA4LDYuNzIsMTUsOS44NiwxNy4wOSwyMi45MiwzMS43NSwzOS45MSw0MS44MiwyMS4wOCwxMi42OCw0NS4yNCwxNS41Myw2OC45Miw2LjQ4WiIvPgogICAgPHBhdGggZD0iTTUxNS45OCwyNzEuOTJsLTcxLjYsNDQuODJjLTMuMDQsMS45MS04Ljg2LjQzLTExLjMzLTEuMDRzLTUuODMtNS41Ny01LjgzLTkuMjRsLS4xMi04OC43OGMwLTQuNTcsMy41Mi04LjU3LDUuOTItMTAuMjQsNC44My0yLjMxLDkuMDEtMiwxMy4yNi40MWw2Ny41Miw0My4yM2MzLjcyLDIuMzgsNi4zNyw1LjYyLDYuOSw5LjI3cy0uNyw5LjAzLTQuNzMsMTEuNTZaIi8+CiAgICA8cGF0aCBkPSJNMzU5LjY5LDM4Ljk4Yy0zMi42Mi0xNy4zNi02Ny42LTI2Ljc5LTEwNC4yMS0yNy4zOC0yOS44MS0uNDgtNTguMTUsMy41MS04Ni4yNCwxMy4wMi0zMi4zOSwxMC45Ni02MS45MSwyNi44MS04OC4zNCw0OC41Mi0uNy41OC0yLjk5LjcxLTMuODEuMzQtMS4wMi0uNDUtMS4wMi0zLjE1LjAyLTQuMThDMTEzLjg2LDMyLjgxLDE2Mi41NywxMC4zMywyMTMuODQsMi43M2M5OC43Mi0xNC42MywxOTQuMDcsMzAuNTIsMjQ3Ljk5LDExMy42LDE3Ljc1LDI3LjM1LDMwLjY2LDU2Ljg3LDM2LjQ3LDg5LjYxLTQuODguNTItOC41My0yLjE2LTExLjQxLTUuMTQtMTcuNTYtNjkuNDUtNjMuNDEtMTI3Ljg3LTEyNy4yLTE2MS44MloiLz4KICAgIDxwYXRoIGQ9Ik0yNTMuOTUsNTE4LjM3YzM2LjkzLTQuMzQsNzEuOTctMTEuODYsMTA0LjktMjkuNDQsMjUuNTYtMTMuNjUsNDguMDEtMzAuODMsNjcuNzMtNTIuMTgsMjkuNDktMzEuNDgsNTAuNjItNjkuMTIsNjEuNTYtMTEwLjk1bDkuMy01LjY0Yy44NS40OSwxLjg0LDMuNDgsMS41Nyw0LjY2LTExLjMzLDQ5LTM2LjU4LDkyLjgyLTcyLjE5LDEyOC4xNy0yMC4yLDIwLjA1LTQyLjg2LDM1LjY3LTY4Ljk1LDQ3LjI5LTMyLjI5LDEzLjg0LTY3LjI4LDIyLjA5LTEwMy45MSwxOC4wOVoiLz4KICAgIDxwYXRoIGQ9Ik0zMTQuNzYsNDIwLjA0YzUxLjE4LTcwLjc2LDY5Ljg1LTE4Mi45OSw3NC4zNS0yNjkuNTQtMzMuNDksMjguOTgtNzguMjQsMzkuNzktMTIxLjYxLDM4LjgyLTIxLjI0LS40Ny00MS42OS0yLjg1LTYxLjIyLTEwLjczLDE5LjY1LDMuNTIsMzguMDMsNi42MSw1Ny42MSw3LjQybDEzLjk4LS4wNmMzOS45NS0uMTgsODUuNjUtMTQuMTgsMTE0LjcxLTQzLjIyLTMuMDEsODIuNjktMTguNDMsMTc4LjUtNTYuNjIsMjUwLjQyLTE5LDM1Ljc4LTQ2LjMsNjUuOTktODAuOTIsODctNS45OCwzLjYzLTExLjMsNy4xOS0xNy45LDkuMywzMC4zNC0xOC4zNyw1Ni44My00MC42Niw3Ny42My02OS40MVoiLz4KICAgIDxwYXRoIGQ9Ik0zMTAuNzQsMzk0LjM0Yy0yNS4wOC0xNy42Ny01NS4wNy0xOS43Ny04MS40NS01LjA1LTEuMTktLjY4LTIuMTQtMy42NC0xLjU4LTUuMTYsNS45LTE2LjA0LDE5Ljc3LTI3LjI5LDM2Ljc3LTI5LjY2LDExLjY2LTEuNjMsMjIuNDgsMi40MywzMS4yNyw5Ljg0LDcuNzksNy43NSwxNC42NywxNi44NCwxNC45OSwzMC4wNFoiLz4KICAgIDxwYXRoIGQ9Ik0yOTkuNTMsMjg2Ljg4Yy0yMC43LDguNTUtNDQuMDYuMTEtNTQuNzgtMTkuNTUtNC4xNy03LjY0LTcuNy0xNS44OC02LjQ3LTI1LjY5LDIzLjcsMjAuODMsNTIuMTgsMjkuMjksODMuNTQsMjUuODUtNC42Niw5LjcyLTEzLjEyLDE1LjYtMjIuMjksMTkuMzlaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Dramatiz">
+      </div>
+      <div class="splash-brand fade-up fade-up-2">Dramatiz</div>
+      <p class="splash-tagline fade-up fade-up-3">Os melhores filmes e séries<br>para você e seus amigos</p>
+      <p class="splash-sub fade-up fade-up-3">Escolha o plano ideal e aproveite</p>
+      <div class="splash-btns fade-up fade-up-4">
+        <a href="login.html" class="btn-yellow">Começar</a>
+        <a href="login.html" class="btn-dark">Entrar</a>
+      </div>
+      <a href="#" class="splash-privacy fade-up fade-up-5">Políticas e termos de privacidade</a>
+    </div>
+  </div>
+</div>
+<script>
+const TMDB = '2dca580c2a14b55200e784d157207b4d';
+const IMG = 'https://image.tmdb.org/t/p/w342';
+async function loadPosters() {
+  try {
+    const r = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=' + TMDB + '&language=pt-BR');
+    const d = await r.json();
+    const grid = document.getElementById('splashBg');
+    grid.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const m = d.results[i];
+      const div = document.createElement('div');
+      if (m && m.poster_path) {
+        const img = document.createElement('img');
+        img.src = IMG + m.poster_path;
+        div.appendChild(img);
+      }
+      grid.appendChild(div);
+    }
+  } catch(e) {}
+}
+loadPosters();
+</script>
+</body>
+</html>

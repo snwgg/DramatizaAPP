@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dramatiz — Notificações</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.notif-page { padding:1.25rem 1.25rem 80px; }
+.back-btn { display:flex; align-items:center; gap:8px; color:var(--white); text-decoration:none; margin-bottom:1.25rem; font-weight:600; }
+.back-btn svg { width:20px; height:20px; }
+.notif-title { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:2px; margin-bottom:1.5rem; }
+.notif-group-title { font-size:0.75rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray); margin:1.25rem 0 0.75rem; }
+.notif-item { display:flex; align-items:flex-start; gap:12px; padding:0.75rem 0; border-bottom:1px solid #1a1a1a; cursor:pointer; }
+.notif-thumb { width:52px; height:52px; border-radius:10px; object-fit:cover; flex-shrink:0; background:var(--dark2); }
+.notif-text { flex:1; }
+.notif-name { font-weight:700; font-size:0.85rem; color:var(--yellow); }
+.notif-msg { font-size:0.82rem; color:rgba(255,255,255,0.75); line-height:1.4; }
+.notif-msg span { color:var(--yellow); font-weight:600; }
+.notif-time { font-size:0.72rem; color:var(--gray); margin-top:3px; }
+.notif-dot { width:8px; height:8px; border-radius:50%; background:var(--yellow); flex-shrink:0; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="notif-page">
+    <a href="home.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      Notificações
+    </a>
+
+    <p class="notif-group-title">Destaques</p>
+    <div class="notif-item">
+      <img class="notif-thumb" id="destaque1" src="">
+      <div class="notif-text">
+        <div class="notif-name">Vought Rising</div>
+        <div class="notif-msg"><span>É bomba!</span> Confira o primeiro trailer de Vought Rising.</div>
+        <div class="notif-time">2h</div>
+      </div>
+      <div class="notif-dot"></div>
+    </div>
+    <div class="notif-item">
+      <img class="notif-thumb" style="border-radius:50%;" src="https://i.pravatar.cc/150?img=33">
+      <div class="notif-text">
+        <div class="notif-name">GG</div>
+        <div class="notif-msg">adicionou <span>Velozes &amp; Furiosos</span> a uma coleção.</div>
+        <div class="notif-time">6h</div>
+      </div>
+    </div>
+
+    <p class="notif-group-title">Hoje</p>
+    <div class="notif-item">
+      <img class="notif-thumb" style="border-radius:50%;" src="https://i.pravatar.cc/150?img=47">
+      <div class="notif-text">
+        <div class="notif-name">Dedé</div>
+        <div class="notif-msg">adicionou <span>007: Cassino Royale</span> aos favoritos.</div>
+        <div class="notif-time">30min</div>
+      </div>
+    </div>
+    <div class="notif-item">
+      <img class="notif-thumb" style="border-radius:50%;" src="https://i.pravatar.cc/150?img=47">
+      <div class="notif-text">
+        <div class="notif-name">Dedé</div>
+        <div class="notif-msg">avaliou <span>007: Cassino Royale</span> com 4★: "Muito pôquer".</div>
+        <div class="notif-time">30min</div>
+      </div>
+    </div>
+
+    <p class="notif-group-title">Ontem</p>
+    <div class="notif-item">
+      <img class="notif-thumb" id="notifOntem" src="">
+      <div class="notif-text">
+        <div class="notif-name">E lá vem mais!</div>
+        <div class="notif-msg">Nova temporada de <span>Demolidor: Renascido</span>.</div>
+        <div class="notif-time">1d</div>
+      </div>
+    </div>
+
+    <p class="notif-group-title">Nos últimos 7 dias</p>
+    <div class="notif-item">
+      <img class="notif-thumb" style="border-radius:50%;" src="https://i.pravatar.cc/150?img=68">
+      <div class="notif-text">
+        <div class="notif-name">Dudu</div>
+        <div class="notif-msg">adicionou <span>The Boys</span> aos favoritos.</div>
+        <div class="notif-time">2d</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const TMDB = '2dca580c2a14b55200e784d157207b4d';
+fetch('https://api.themoviedb.org/3/movie/popular?api_key='+TMDB+'&language=pt-BR').then(r=>r.json()).then(d=>{
+  const m1 = d.results[2], m2 = d.results[4];
+  if(m1) document.getElementById('destaque1').src = 'https://image.tmdb.org/t/p/w92' + m1.poster_path;
+  if(m2) document.getElementById('notifOntem').src = 'https://image.tmdb.org/t/p/w92' + m2.poster_path;
+});
+</script>
+</body>
+</html>

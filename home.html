@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dramatiz — Home</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.home-page { padding-bottom: 80px; }
+.hero-banner {
+  width:100%; aspect-ratio:9/13; position:relative; overflow:hidden;
+  background:#111;
+}
+.hero-banner img { width:100%; height:100%; object-fit:cover; display:block; }
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, transparent 30%, rgba(10,10,10,0.7) 65%, var(--black) 100%);
+}
+.hero-top-bar {
+  position:absolute; top:0; left:0; right:0;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 1.25rem;
+  z-index:2;
+}
+.hero-logo { display:flex; align-items:center; gap:8px; }
+.hero-logo img { width:28px; height:28px; }
+.hero-brand { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:3px; color:var(--yellow); }
+.hero-nav { display:flex; gap:1.25rem; }
+.hero-nav a { font-size:0.8rem; font-weight:600; color:rgba(255,255,255,0.65); text-decoration:none; transition:color 0.2s; }
+.hero-nav a.active { color:var(--yellow); border-bottom:2px solid var(--yellow); padding-bottom:2px; }
+.hero-icons { display:flex; gap:14px; }
+.hero-icons a { color:var(--white); }
+.hero-icons svg { width:22px; height:22px; }
+.hero-info {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:1.5rem 1.25rem 1.25rem;
+  z-index:2;
+}
+.hero-tags { display:flex; gap:6px; margin-bottom:0.5rem; flex-wrap:wrap; }
+.hero-tag-item { font-size:0.72rem; color:rgba(255,255,255,0.65); }
+.hero-tag-item:not(:last-child)::after { content:'·'; margin-left:6px; }
+.hero-title { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; letter-spacing:2px; line-height:1; margin-bottom:0.5rem; }
+.hero-desc { font-size:0.8rem; color:rgba(255,255,255,0.7); line-height:1.5; margin-bottom:1rem; }
+.hero-btns { display:flex; gap:10px; }
+.hero-btn-play {
+  flex:1; background:var(--yellow); color:var(--black);
+  border:none; border-radius:50px; padding:0.75rem;
+  font-family:'Barlow',sans-serif; font-weight:800; font-size:0.8rem;
+  letter-spacing:1.5px; text-transform:uppercase; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+  text-decoration:none;
+}
+.hero-btn-list {
+  background:rgba(255,255,255,0.1); backdrop-filter:blur(8px);
+  border:1.5px solid rgba(255,255,255,0.2); border-radius:50px;
+  padding:0.75rem 1.25rem; cursor:pointer; color:var(--white);
+  font-size:1rem; display:flex; align-items:center; justify-content:center;
+  gap:6px; font-family:'Barlow',sans-serif; font-weight:600; font-size:0.8rem;
+}
+.dots { display:flex; gap:5px; margin-top:0.75rem; }
+.dot { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.3); }
+.dot.active { background:var(--yellow); width:18px; border-radius: 8px; }
+.section { padding:1.25rem 1.25rem 0; }
+.movie-row { display:flex; gap:10px; overflow-x:auto; scrollbar-width:none; }
+.movie-row::-webkit-scrollbar { display:none; }
+.movie-poster { width:100px; flex-shrink:0; border-radius:8px; overflow:hidden; cursor:pointer; }
+.movie-poster img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; border-radius:8px; }
+.movie-backdrop { width:160px; flex-shrink:0; border-radius:8px; overflow:hidden; cursor:pointer; }
+.movie-backdrop img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.movie-title-small { font-size:0.72rem; color:rgba(255,255,255,0.7); margin-top:5px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="home-page">
+    <!-- Hero Banner -->
+    <div class="hero-banner" id="heroBanner">
+      <div class="hero-top-bar">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="hero-logo">
+            <img style="filter:invert(85%) sepia(50%) saturate(700%) hue-rotate(5deg) brightness(100%)" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FtYWRhXzIiIGZpbGw9IiNGNUM1MTgiIGRhdGEtbmFtZT0iQ2FtYWRhIDIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUyMC44MyA1MTkuMzgiPgogIDxnIGlkPSJDYW1hZGFfMS0yIiBkYXRhLW5hbWU9IkNhbWFkYSAxIj4KICAgIDxwYXRoIGQ9Ik0xMi45MywzNTEuNTZjLTEwLjA4LTI4Ljc2LTE1LjAyLTU4LTEyLjA5LTg3LjYzbDEuMjMtMTIuNDJjNS4zNSwxMTIuNjMsNjYuNTYsMjA4LjkyLDE3Ny40MiwyNDIuOTEsMTAuNzUtLjU2LDE4LjQ5LTYuODgsMjQuMDYtMTUuODQsOC4xMS0xNC41LDEwLjk2LTMxLjAxLDEwLjk5LTQ3Ljk5LTE2LjI0LDkuNDktMzQuMjksMTEuODctNTIuMDEsNi4wNy01MC4yNS0xNi40OC04Ni4wMi02Ny4wOS0xMDUuMy0xMTQuOTlDMjYuNzQsMjQ1Ljg5LDEzLjIzLDE3NS43MSw4LjIzLDkzLjE0YzI3LjM1LDI0LjkyLDY2LjE1LDM2LjY0LDEwMi4xNCwzOS41Nyw0NC4yNCwzLjYxLDg4LjE5LTIuMDIsMTMwLjI1LTE1Ljg5LDI0LjYyLTguMTIsNDguNTktMjAuNzgsNjYuMjctNDAuODEuMjEsMzQuNzgtMi4wMSw2Ny43NC02LjAzLDEwMC43bC4yLTEzLjE1Ljc3LTE0LjgzLjQxLTEzLjEuNjYtNDQuOTJjLTguNTEsNy4yNS0xNi43MywxMi4yOS0yNi4zOSwxNy4xMy0xNy4wMSw4LjUzLTMzLjU2LDE2LjgxLTQ5LjExLDI3LjY4LTE0LjUzLDEwLjE2LTI1LjI1LDIzLjE2LTMxLjA1LDM5LjkyLTE0LjgxLDQyLjgtOC4yMSw4My4xOSwzLjY1LDEyNS44OWwxNC41Niw1Mi40M2M1LjQsMTkuNDQsOC40NiwzOC42Myw5LjQ3LDU4Ljg5LDEuNTgsMzEuODUtNS4wNyw3My4xNS0zMS44OSw5MS43Ni0zLjA1LDIuMTItOC44OCw1LjE3LTEyLjQ2LDQuMzUtMTAuNTQtMi40Mi0xOS40LTYuMDEtMjkuMDUtMTAuMjEtNjQuMTktMjcuOTMtMTE0LjMzLTgwLjI3LTEzNy43MS0xNDdaTTE0My40OCwyNDcuNjhjLTQuNjMtMjAuNi0yMi40LTM0LjI1LTQyLjMyLTM1LjI5LTIxLjQzLTEuMTItNDAuODgsMTQuMjctNDIuODMsMzYuMjEsMzEuMzgtMTMuMTgsNTMuNTUtMTMuNTQsODUuMTQtLjkyWk0yMTAuNTIsMzgzLjhsLTguNzItNDIuNTVjLTI3LjgxLDkuMTUtNTYuMjksNi40NS04Mi4wMi01Ljc2bC0yNC44MS0xNC45OGMuNzcsNS41NCwzLjg4LDEwLjA4LDYuNzIsMTUsOS44NiwxNy4wOSwyMi45MiwzMS43NSwzOS45MSw0MS44MiwyMS4wOCwxMi42OCw0NS4yNCwxNS41Myw2OC45Miw2LjQ4WiIvPgogICAgPHBhdGggZD0iTTUxNS45OCwyNzEuOTJsLTcxLjYsNDQuODJjLTMuMDQsMS45MS04Ljg2LjQzLTExLjMzLTEuMDRzLTUuODMtNS41Ny01LjgzLTkuMjRsLS4xMi04OC43OGMwLTQuNTcsMy41Mi04LjU3LDUuOTItMTAuMjQsNC44My0yLjMxLDkuMDEtMiwxMy4yNi40MWw2Ny41Miw0My4yM2MzLjcyLDIuMzgsNi4zNyw1LjYyLDYuOSw5LjI3cy0uNyw5LjAzLTQuNzMsMTEuNTZaIi8+CiAgICA8cGF0aCBkPSJNMzU5LjY5LDM4Ljk4Yy0zMi42Mi0xNy4zNi02Ny42LTI2Ljc5LTEwNC4yMS0yNy4zOC0yOS44MS0uNDgtNTguMTUsMy41MS04Ni4yNCwxMy4wMi0zMi4zOSwxMC45Ni02MS45MSwyNi44MS04OC4zNCw0OC41Mi0uNy41OC0yLjk5LjcxLTMuODEuMzQtMS4wMi0uNDUtMS4wMi0zLjE1LjAyLTQuMThDMTEzLjg2LDMyLjgxLDE2Mi41NywxMC4zMywyMTMuODQsMi43M2M5OC43Mi0xNC42MywxOTQuMDcsMzAuNTIsMjQ3Ljk5LDExMy42LDE3Ljc1LDI3LjM1LDMwLjY2LDU2Ljg3LDM2LjQ3LDg5LjYxLTQuODguNTItOC41My0yLjE2LTExLjQxLTUuMTQtMTcuNTYtNjkuNDUtNjMuNDEtMTI3Ljg3LTEyNy4yLTE2MS44MloiLz4KICAgIDxwYXRoIGQ9Ik0yNTMuOTUsNTE4LjM3YzM2LjkzLTQuMzQsNzEuOTctMTEuODYsMTA0LjktMjkuNDQsMjUuNTYtMTMuNjUsNDguMDEtMzAuODMsNjcuNzMtNTIuMTgsMjkuNDktMzEuNDgsNTAuNjItNjkuMTIsNjEuNTYtMTEwLjk1bDkuMy01LjY0Yy44NS40OSwxLjg0LDMuNDgsMS41Nyw0LjY2LTExLjMzLDQ5LTM2LjU4LDkyLjgyLTcyLjE5LDEyOC4xNy0yMC4yLDIwLjA1LTQyLjg2LDM1LjY3LTY4Ljk1LDQ3LjI5LTMyLjI5LDEzLjg0LTY3LjI4LDIyLjA5LTEwMy45MSwxOC4wOVoiLz4KICAgIDxwYXRoIGQ9Ik0zMTQuNzYsNDIwLjA0YzUxLjE4LTcwLjc2LDY5Ljg1LTE4Mi45OSw3NC4zNS0yNjkuNTQtMzMuNDksMjguOTgtNzguMjQsMzkuNzktMTIxLjYxLDM4LjgyLTIxLjI0LS40Ny00MS42OS0yLjg1LTYxLjIyLTEwLjczLDE5LjY1LDMuNTIsMzguMDMsNi42MSw1Ny42MSw3LjQybDEzLjk4LS4wNmMzOS45NS0uMTgsODUuNjUtMTQuMTgsMTE0LjcxLTQzLjIyLTMuMDEsODIuNjktMTguNDMsMTc4LjUtNTYuNjIsMjUwLjQyLTE5LDM1Ljc4LTQ2LjMsNjUuOTktODAuOTIsODctNS45OCwzLjYzLTExLjMsNy4xOS0xNy45LDkuMywzMC4zNC0xOC4zNyw1Ni44My00MC42Niw3Ny42My02OS40MVoiLz4KICAgIDxwYXRoIGQ9Ik0zMTAuNzQsMzk0LjM0Yy0yNS4wOC0xNy42Ny01NS4wNy0xOS43Ny04MS40NS01LjA1LTEuMTktLjY4LTIuMTQtMy42NC0xLjU4LTUuMTYsNS45LTE2LjA0LDE5Ljc3LTI3LjI5LDM2Ljc3LTI5LjY2LDExLjY2LTEuNjMsMjIuNDgsMi40MywzMS4yNyw5Ljg0LDcuNzksNy43NSwxNC42NywxNi44NCwxNC45OSwzMC4wNFoiLz4KICAgIDxwYXRoIGQ9Ik0yOTkuNTMsMjg2Ljg4Yy0yMC43LDguNTUtNDQuMDYuMTEtNTQuNzgtMTkuNTUtNC4xNy03LjY0LTcuNy0xNS44OC02LjQ3LTI1LjY5LDIzLjcsMjAuODMsNTIuMTgsMjkuMjksODMuNTQsMjUuODUtNC42Niw5LjcyLTEzLjEyLDE1LjYtMjIuMjksMTkuMzlaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Dramatiz">
+            <span class="hero-brand">Dramatiz</span>
+          </div>
+          <div class="hero-nav">
+            <a href="home.html" class="active">Início</a>
+            <a href="busca.html?type=filme">Filmes</a>
+            <a href="busca.html?type=serie">Séries</a>
+            <a href="busca.html?type=anime">Animes</a>
+          </div>
+        </div>
+        <div class="hero-icons">
+          <a href="notificacoes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3l-4 4-4-4"/></svg></a>
+        </div>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-info" id="heroInfo">
+        <div class="hero-tags" id="heroTags"></div>
+        <div class="hero-title" id="heroTitle">Carregando...</div>
+        <p class="hero-desc" id="heroDesc"></p>
+        <div class="hero-btns">
+          <a href="filme.html" class="hero-btn-play">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg>
+            Assistir
+          </a>
+          <button class="hero-btn-list" onclick="toggleList(this)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Minha Lista
+          </button>
+        </div>
+        <div class="dots">
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Populares Agora -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Populares Agora</span>
+        <a href="busca.html" class="section-link">Ver tudo ›</a>
+      </div>
+      <div class="movie-row" id="popularRow"></div>
+    </div>
+
+    <!-- Em Alta -->
+    <div class="section" style="margin-top:1.25rem;">
+      <div class="section-header">
+        <span class="section-title">Em Alta</span>
+        <a href="busca.html" class="section-link">Ver tudo ›</a>
+      </div>
+      <div class="movie-row" id="trendingRow"></div>
+    </div>
+
+    <!-- Ação -->
+    <div class="section" style="margin-top:1.25rem;">
+      <div class="section-header">
+        <span class="section-title">Ação & Aventura</span>
+        <a href="busca.html" class="section-link">Ver tudo ›</a>
+      </div>
+      <div class="movie-row" id="actionRow"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="home.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Início
+    </a>
+    <a href="busca.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      Buscar
+    </a>
+    <a href="feed.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Feed
+    </a>
+    <a href="biblioteca.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+      Biblioteca
+    </a>
+    <a href="perfil.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Perfil
+    </a>
+  </nav>
+</div>
+<script>
+const TMDB = '2dca580c2a14b55200e784d157207b4d';
+const IMG = 'https://image.tmdb.org/t/p/';
+
+function toggleList(btn) {
+  const added = btn.dataset.added === '1';
+  btn.dataset.added = added ? '0' : '1';
+  btn.innerHTML = added
+    ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg> Minha Lista'
+    : '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6L9 17l-5-5"/></svg> Adicionado';
+}
+
+function makePoster(m, link='filme.html') {
+  const div = document.createElement('a');
+  div.href = link;
+  div.className = 'movie-poster';
+  div.style.cssText = 'text-decoration:none;display:block;';
+  if (m.poster_path) {
+    const img = document.createElement('img');
+    img.src = IMG + 'w185' + m.poster_path;
+    img.alt = m.title || m.name;
+    img.loading = 'lazy';
+    div.appendChild(img);
+  }
+  const t = document.createElement('div');
+  t.className = 'movie-title-small';
+  t.textContent = m.title || m.name;
+  div.appendChild(t);
+  return div;
+}
+
+async function init() {
+  try {
+    const [pop, trend, action] = await Promise.all([
+      fetch(IMG.replace('/t/p/','')+'/3/movie/popular?api_key='+TMDB+'&language=pt-BR').then(r=>r.json()),
+      fetch('https://api.themoviedb.org/3/trending/all/week?api_key='+TMDB+'&language=pt-BR').then(r=>r.json()),
+      fetch('https://api.themoviedb.org/3/discover/movie?api_key='+TMDB+'&with_genres=28&language=pt-BR').then(r=>r.json()),
+    ]);
+
+    const featured = pop.results[0];
+    if (featured) {
+      const banner = document.getElementById('heroBanner');
+      const img = document.createElement('img');
+      img.src = IMG + 'w780' + featured.backdrop_path;
+      img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+      banner.insertBefore(img, banner.firstChild);
+      document.getElementById('heroTitle').textContent = featured.title;
+      document.getElementById('heroDesc').textContent = (featured.overview||'').substring(0,120) + '...';
+      const tagsEl = document.getElementById('heroTags');
+      ['Popular', 'Destaque'].forEach(t => {
+        const s = document.createElement('span');
+        s.className = 'hero-tag-item';
+        s.textContent = t;
+        tagsEl.appendChild(s);
+      });
+    }
+
+    const popRow = document.getElementById('popularRow');
+    pop.results.slice(1,10).forEach(m => popRow.appendChild(makePoster(m)));
+
+    const trendRow = document.getElementById('trendingRow');
+    trend.results.slice(0,9).forEach(m => trendRow.appendChild(makePoster(m)));
+
+    const actionRow = document.getElementById('actionRow');
+    action.results.slice(0,9).forEach(m => actionRow.appendChild(makePoster(m)));
+
+  } catch(e) { console.error(e); }
+}
+
+const TMDB_BASE = 'https://api.themoviedb.org';
+const popUrl = TMDB_BASE+'/3/movie/popular?api_key='+TMDB+'&language=pt-BR';
+fetch(popUrl).then(r=>r.json()).then(d=>{
+  const featured = d.results[0];
+  if (featured) {
+    const banner = document.getElementById('heroBanner');
+    const img = document.createElement('img');
+    img.src = IMG + 'w780' + featured.backdrop_path;
+    img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    banner.insertBefore(img, banner.firstChild);
+    document.getElementById('heroTitle').textContent = featured.title;
+    document.getElementById('heroDesc').textContent = (featured.overview||'').substring(0,120)+'...';
+  }
+  const popRow = document.getElementById('popularRow');
+  d.results.slice(1,10).forEach(m => popRow.appendChild(makePoster(m)));
+});
+fetch('https://api.themoviedb.org/3/trending/all/week?api_key='+TMDB+'&language=pt-BR').then(r=>r.json()).then(d=>{
+  const row = document.getElementById('trendingRow');
+  d.results.slice(0,9).forEach(m => row.appendChild(makePoster(m)));
+});
+fetch('https://api.themoviedb.org/3/discover/movie?api_key='+TMDB+'&with_genres=28&language=pt-BR').then(r=>r.json()).then(d=>{
+  const row = document.getElementById('actionRow');
+  d.results.slice(0,9).forEach(m => row.appendChild(makePoster(m)));
+});
+</script>
+</body>
+</html>
